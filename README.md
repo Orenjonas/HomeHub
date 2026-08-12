@@ -1,16 +1,14 @@
 # HomeHub
 
-HomeHub is a learning-focused, production-style smart home platform built as a monorepo.
+HomeHub is a smart home platform built as a microservices monorepo for displaying weather data from yr.no, energy prices from an open norwegian energy price API and train delays/cancellations from entur.no.
 
-It is designed to help you learn and demonstrate:
+Purpose: get hands on experience with
 
-- .NET 10 and C# 14
 - Service boundaries and microservice communication
 - Authentication and authorization
 - Docker and AWS deployment patterns
 - Infrastructure as code with Terraform
 - CI/CD with GitHub Actions
-- Working effectively with GitHub Copilot agents
 
 ## Repository Goals
 
@@ -47,9 +45,9 @@ HomeHub/
 ## Build Order (Recommended)
 
 1. Home.Api + PostgreSQL + auth foundation.
-2. Weather.Service integration and Home.Api aggregation.
-3. Transit.Service integration.
-4. Energy.Service with provider adapter abstraction.
+2. Weather.Service integration and Home.Api aggregation collecting data from yr.no API.
+3. Transit.Service integration collecting data from entur.no API.
+4. Energy.Service with provider adapter abstraction. Which API to be chosen later.
 5. Notification.Worker with SNS/SQS style event workflow.
 6. Terraform + GitHub Actions deployment pipeline.
 

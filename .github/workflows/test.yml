@@ -23,9 +23,17 @@ jobs:
       - name: Restore and test when solution exists
         shell: bash
         run: |
-          if ls *.sln >/dev/null 2>&1; then
-            dotnet restore
-            dotnet test --configuration Release --no-restore
+          SOLUTION_FILE=""
+          for f in *.slnx *.sln; do
+            if [[ -f "$f" ]]; then
+              SOLUTION_FILE="$f"
+              break
+            fi
+          done
+
+          if [[ -n "$SOLUTION_FILE" ]]; then
+            dotnet restore "$SOLUTION_FILE"
+            dotnet test "$SOLUTION_FILE" --configuration Release --no-restore
           else
             echo "No solution file yet. Skipping restore/test for bootstrap phase."
           fi
