@@ -47,3 +47,5 @@ secrets/
 *.pem
 *.key
 *.pfx
+
+.fake

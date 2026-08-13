@@ -1,8 +1,14 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/Energy.Service/Energy.Service.csproj" />
     <Project Path="src/Home.Api/Home.Api.csproj" />
+    <Project Path="src/Transit.Service/Transit.Service.csproj" />
+    <Project Path="src/Weather.Service/Weather.Service.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Energy.Service.Tests/Energy.Service.Tests.csproj" />
     <Project Path="tests/Home.Api.Tests/Home.Api.Tests.csproj" />
+    <Project Path="tests/Transit.Service.Tests/Transit.Service.Tests.csproj" />
+    <Project Path="tests/Weather.Service.Tests/Weather.Service.Tests.csproj" />
   </Folder>
 </Solution>

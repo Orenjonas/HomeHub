@@ -2,6 +2,17 @@
 
 This plan is intentionally incremental. Each phase should end with a working checkpoint.
 
+## API Integration Rule
+
+Real external API connections happen only after each service has:
+
+1. A provider interface and contract.
+2. A fake or in-memory implementation for local tests.
+3. Contract tests that prove the adapter contract.
+4. A documented fallback strategy for timeout, malformed payloads, and outages.
+
+This keeps Home.Api independent from live providers until the service boundary is stable.
+
 ## Phase 0: Foundations (Current)
 
 Outcome:
@@ -48,14 +59,16 @@ Outcome:
 Tasks:
 
 1. Create Weather.Service + tests.
-2. Integrate one weather provider client.
-3. Add Home.Api client call and timeout/retry policy.
-4. Add error fallback behavior.
+2. Define IWeatherProvider contract and fake provider for local development.
+3. Add real yr.no adapter using HttpClient with timeout, retry, and response mapping.
+4. Add Home.Api client call and timeout/retry policy.
+5. Add error fallback behavior and provider-selection config.
 
 Exit criteria:
 
 - Dashboard summary includes weather block.
 - Failure mode is handled and tested.
+- Real API call works in a smoke test against the configured endpoint.
 
 ## Phase 3: Transit Service
 
@@ -66,13 +79,16 @@ Outcome:
 Tasks:
 
 1. Create Transit.Service + tests.
-2. Add provider client and normalization mapping.
-3. Add aggregation from Home.Api.
+2. Define ITransitProvider contract and fake provider representing departures and disruptions.
+3. Add real Entur provider client and normalization mapping for stop data, departures, and alerts.
+4. Add aggregation from Home.Api and handle rate limits / partial data failures.
+5. Add provider contract tests for data-shape drift.
 
 Exit criteria:
 
 - Dashboard summary includes transit block.
 - Provider data shape changes are isolated in service layer.
+- Real API smoke test confirms successful parsing of live departures.
 
 ## Phase 4: Energy Service (Open Source API Adapter)
 
@@ -83,14 +99,36 @@ Outcome:
 Tasks:
 
 1. Define IEnergyPriceProvider interface.
-2. Implement first provider adapter from docs/ENERGY_API_OPTIONS.md.
-3. Add cache strategy and fallback behavior.
-4. Add provider contract tests.
+2. Implement a fake/local provider and contract tests.
+3. Implement the first real provider adapter from docs/ENERGY_API_OPTIONS.md, such as hvakosterstrommen.no.
+4. Add cache strategy, time-window filtering, and fallback behavior.
+5. Add provider configuration to switch adapters without changing Home.Api consumers.
 
 Exit criteria:
 
 - Dashboard summary includes energy block.
 - Provider can be swapped with config only.
+- Real API smoke test verifies live pricing payloads map correctly.
+
+## Phase 4.5: Real API Integration Pass
+
+Outcome:
+
+- Each external provider is live, but isolated behind a stable service contract.
+
+Tasks:
+
+1. Connect Weather.Service to yr.no for live weather data.
+2. Connect Transit.Service to Entur for live departures and disruptions.
+3. Connect Energy.Service to an open electricity provider for current pricing and daily forecast.
+4. Add API-specific configuration, telemetry, retry policies, and operational logging.
+5. Validate one end-to-end dashboard load against real endpoints in a non-production environment.
+
+Exit criteria:
+
+- All three provider integrations are live and tested.
+- Failures degrade gracefully without breaking the page.
+- The dashboard can load with real responses and clear fallback states.
 
 ## Phase 5: Messaging + Worker
 
@@ -123,14 +161,3 @@ Tasks:
 Exit criteria:
 
 - One environment deploys from pipeline.
-
-## Weekly Cadence Suggestion
-
-- Week 1: Phase 1
-- Week 2: Phase 2
-- Week 3: Phase 3
-- Week 4: Phase 4
-- Week 5: Phase 5
-- Week 6: Phase 6
-
-Adjust pace based on learning depth, not speed.
