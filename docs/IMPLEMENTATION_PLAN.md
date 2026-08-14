@@ -40,15 +40,15 @@ Outcome:
 
 Tasks:
 
-1. Create Home.Api and Home.Api.Tests.
-2. Add auth baseline (JWT validation layer; Cognito integration can be stubbed for local dev).
+1. [x] Create Home.Api and Home.Api.Tests.
+2. [x] Add auth baseline (JWT validation layer; Cognito integration can be stubbed for local dev).
 3. Add persistence and first entity model.
-4. Add one endpoint: GET /api/dashboard/summary.
+4. [x] Add one endpoint: GET /api/dashboard/summary.
 
 Exit criteria:
 
-- Endpoint returns seeded local data.
-- Unit + integration tests pass.
+- [x] Endpoint returns seeded local data.
+- [x] Unit + integration tests pass.
 
 ## Phase 2: Weather Service
 

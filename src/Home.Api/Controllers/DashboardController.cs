@@ -1,10 +1,12 @@
 using Home.Api.Models;
 using Home.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Home.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/dashboard")]
 public sealed class DashboardController : ControllerBase
 {
