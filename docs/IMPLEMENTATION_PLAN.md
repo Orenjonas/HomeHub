@@ -42,7 +42,7 @@ Tasks:
 
 1. [x] Create Home.Api and Home.Api.Tests.
 2. [x] Add auth baseline (JWT validation layer; Cognito integration can be stubbed for local dev).
-3. Add persistence and first entity model.
+3. [x] Add persistence and first entity model.
 4. [x] Add one endpoint: GET /api/dashboard/summary.
 
 Exit criteria:
